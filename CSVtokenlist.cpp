@@ -1,5 +1,4 @@
 #include "CSVtokenlist.h"
-#include "strmanip.h"
 
 #include <cassert>
 #include <algorithm>
@@ -24,7 +23,23 @@ const int COMMA = ',', FS = 0x1C;
 
 class noTRAILINGQUOTE {};
 
+std::string::const_iterator rtrim(const std::string::const_iterator &begin,
+                                  const std::string::const_iterator &end) {
+	std::string::const_iterator ptr = end;
+	while(ptr != begin && (*ptr == ' ' || *ptr == '\t')) {
+            ptr--;
+	}
+	return ptr;
+}
 
+std::string::const_iterator ltrim(const std::string::const_iterator &begin,
+                                  const std::string::const_iterator &end) {
+	std::string::const_iterator ptr = begin;
+	while(ptr != end && (*ptr == ' ' || *ptr == '\t')) {
+            ptr++;
+	}
+	return ptr;
+}
 
 CSVtokenlist::CSVtokenlist(const string& buf, int _d) : L(buf), _no_EOL_DQUOTE(0), DELIM(_d)
 {
